@@ -3,9 +3,10 @@
 ## Možda je glupo, ali lijepo izgleda
 
 Korišten vue.js i neki vue-resource i neki v-masonry, nemam pojma trebate li
-išta za gledanje
+išta za gledanje.
 
-tl;dr kod je užasan, ali radi. Počistim to malo, CSS je na sve strane.
+tl;dr kod je užasan, ali radi. Počistim to malo, CSS je na sve strane,
+a komentara nigdje..
 
 ## Ali što je ovo uopće?
 
@@ -31,3 +32,11 @@ vjerovali, mod za uređivanje cijelog tog spisa.
 grupacija ovih fensi kategorija. 2. razina su fensi kategorije. 3. razina su
 pojedinačne stavke u kategorijama. Sve je modularno. Sve se može i dodavati i
 brisati.
+
+## Jesu li podatci spašeni?
+
+Ajmo reći. Sve ide na moj Firebase. Mogao bih napraviti i registraciju korisnika
+tako da može više ljudi imati različite tablice, ali nije da imam koristi od
+toga.
+
+Slobodno možete šarati u svrhu isprobavanja, imam spremljen back-up.
