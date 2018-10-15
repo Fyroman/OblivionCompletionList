@@ -6,7 +6,7 @@ Korišten vue.js i neki vue-resource i neki v-masonry, nemam pojma trebate li
 išta za gledanje.
 
 tl;dr kod je užasan, ali radi. Počistim to malo, CSS je na sve strane,
-a komentara nigdje..
+a komentara nigdje.
 
 ## Ali što je ovo uopće?
 
@@ -40,3 +40,10 @@ tako da može više ljudi imati različite tablice, ali nije da imam koristi od
 toga.
 
 Slobodno možete šarati u svrhu isprobavanja, imam spremljen back-up.
+
+I da, znam da stvari mogu imati custom border koji je možda elegantnije rješenje
+za ovako kičasti dizajn, vjerojatno ću promijeniti na to u svrhu dosezanja višeg
+stadija modularnosti.
+
+I znam da sam trpao "id" svemu umjesto klase. Treba to sve urediti i pobacati u
+style.css.
