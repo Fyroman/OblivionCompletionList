@@ -29,9 +29,9 @@ vjerovali, mod za uređivanje cijelog tog spisa.
 ## Što mogu uređivati?
 
 3 su razine spiska. 1. razina je ovo što piše "Main Cities", to je velika
-grupacija ovih fensi kategorija. 2. razina su fensi kategorije. 3. razina su
-pojedinačne stavke u kategorijama. Sve je modularno. Sve se može i dodavati i
-brisati.
+grupacija ovih fensi kategorija. 2. razina su fensi kategorije, "Anvil",
+"Bravil", "Bruma" itd. 3. razina su pojedinačne stavke u kategorijama. Sve je
+modularno. Sve se može i dodavati i brisati.
 
 ## Jesu li podatci spašeni?
 
@@ -45,5 +45,4 @@ I da, znam da stvari mogu imati custom border koji je možda elegantnije rješen
 za ovako kičasti dizajn, vjerojatno ću promijeniti na to u svrhu dosezanja višeg
 stadija modularnosti.
 
-I znam da sam trpao "id" svemu umjesto klase. Treba to sve urediti i pobacati u
-style.css.
+I znam da sam trpao "id" svemu umjesto klase. Treba to sve urediti i pobacati u style.css.
