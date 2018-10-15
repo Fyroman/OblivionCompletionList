@@ -1,26 +1,6 @@
 # OblivionCompletionList
 
-## Project setup
-```
-npm install
-```
+## Možda je glupo, ali lijepo izgleda
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
+Korišten vue.js i neki vue-resource i neki v-masonry, nemam pojma trebate li
+išta za gledanje
