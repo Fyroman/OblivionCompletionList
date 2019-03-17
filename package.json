@@ -9,17 +9,18 @@
   },
   "dependencies": {
     "masonry-layout": "^4.2.2",
-    "vue": "^2.5.17",
-    "vue-masonry": "^0.11.6",
+    "vue": "^2.6.9",
+    "vue-masonry": "^0.11.7",
     "vue-resource": "^1.5.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.2",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-eslint": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
+    "@vue/cli-plugin-babel": "^3.5.1",
+    "@vue/cli-plugin-eslint": "^3.5.1",
+    "@vue/cli-service": "^3.5.1",
     "@vue/eslint-config-standard": "^3.0.5",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.6.9"
   },
   "eslintConfig": {
     "root": true,
