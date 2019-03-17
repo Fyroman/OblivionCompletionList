@@ -1,14 +1,18 @@
 <template>
   <div id="main">
     <h1>{{ group.groupName }}</h1>
-    <div class="kontenjer"
-         v-masonry itemSelector=".category-box"
-         fit-width="true">
+    <div
+      class="kontenjer"
+      v-masonry
+      itemSelector=".category-box"
+      fit-width="true"
+      stagger="30ms"
+    >
+
       <Category v-for="category in computedCategories"
                 :key="`${group.key}${category.key}`"
                 :category="category"
                 :editMode="editMode"
-                :showCompleted="showCompleted"
                 :group="group"
                 @deleteCategory="deleteCategory($event)"/>
     </div>
@@ -46,7 +50,7 @@
   import Category from '@/components/Category.vue'
 
   export default {
-    props: ['group', 'editMode', 'showCompleted'],
+    props: ['group', 'editMode'],
     components: {
       Category
     },
@@ -153,11 +157,6 @@
         );
       }
     },
-    updated() {
-      if (typeof this.$redrawVueMasonry === 'function') {
-        this.$redrawVueMasonry()
-      }
-    }
   }
 </script>
 

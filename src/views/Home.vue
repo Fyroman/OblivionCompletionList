@@ -1,30 +1,32 @@
 <template>
   <div class="home">
-    <!--
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
--->
 
-    <button id="editButton" @click="toggleEditing"
-            @mouseover="buttonHovering=true"
-            @mouseout="buttonHovering=false">Toggle Editing
-    </button>
-    <button id="completedButton" @click="toggleCompleted"
-            @mouseover="buttonHovering=true"
-            @mouseout="buttonHovering=false">Toggle Completed
-    </button>
+    <div class="menu">
+
+      <button
+        id="editButton"
+        @click="toggleEditing"
+      >
+        Toggle Editing
+      </button>
+
+      <button
+        id="completedButton"
+        @click="toggleCompleted"
+      >
+        Toggle Completed
+      </button>
+
+    </div>
 
     <Group v-for="group in computedGroups"
            :key="`${group.key}`"
            :group="group"
            :editMode="editMode"
-           :showCompleted="$store.state.group.showCompleted"
            @deleteGroup="deleteGroup($event)"/>
 
     <button v-show="!showForm&&editMode"
-            @click="showForm=!showForm"
-            @mouseover="buttonHovering=true"
-            @mouseout="buttonHovering=false">
+            @click="showForm=!showForm">
       Add New Group
     </button>
 
@@ -53,7 +55,6 @@
         groupName: '',
         showForm: false,
         editMode: false,
-        buttonHovering: false,
       }
     },
     computed: {
@@ -121,24 +122,20 @@
       toggleEditing: function () {
         this.resetForm();
         this.editMode = !this.editMode;
-        this.$redrawVueMasonry();
+        this.$nextTick(() => {
+          this.$redrawVueMasonry();
+        })
       },
       toggleCompleted: function () {
         this.$store.commit('toggleShowCompleted')
-        // this.showCompleted = !this.showCompleted;
-        this.$redrawVueMasonry();
+        this.$nextTick(() => {
+          this.$redrawVueMasonry()
+        })
       }
     },
     async created() {
-      console.log('učitavanje grupa')
       await this.$store.dispatch('loadData')
-      console.log('učitavanje gotovo')
     },
-    updated() {
-      if (typeof this.$redrawVueMasonry === 'function') {
-        this.$redrawVueMasonry()
-      }
-    }
   }
 </script>
 
@@ -169,19 +166,12 @@
     background: url(../assets/button_hover.png);
   }
 
-  #editButton {
-    display: block;
-    position: sticky;
+  .menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
     top: 10px;
-    margin: 0 0 0px auto;
-    z-index: 1000;
+    right: 10px;
   }
 
-  #completedButton {
-    display: block;
-    position: sticky;
-    top: 40px;
-    margin: 0 0 0 auto;
-    z-index: 1000;
-  }
 </style>

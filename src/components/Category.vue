@@ -58,7 +58,7 @@
   import Quest from '@/components/Quest.vue'
 
   export default {
-    props: ['group', 'category', 'editMode', 'showCompleted'],
+    props: ['group', 'category', 'editMode'],
     components: {
       Quest
     },
@@ -162,11 +162,6 @@
         );
       }
     },
-    updated() {
-      if (typeof this.$redrawVueMasonry === 'function') {
-        this.$redrawVueMasonry()
-      }
-    }
   }
 </script>
 
