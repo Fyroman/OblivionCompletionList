@@ -1,11 +1,12 @@
 <template>
-  <div class="home">
+  <div>
 
     <div class="menu">
 
       <button
         id="editButton"
         @click="toggleEditing"
+        :disabled="disableButtons"
       >
         Toggle Editing
       </button>
@@ -13,6 +14,7 @@
       <button
         id="completedButton"
         @click="toggleCompleted"
+        :disabled="disableButtons"
       >
         Toggle Completed
       </button>
@@ -55,6 +57,7 @@
         groupName: '',
         showForm: false,
         editMode: false,
+        disableButtons: false,
       }
     },
     computed: {
@@ -127,9 +130,13 @@
         })
       },
       toggleCompleted: function () {
+        this.disableButtons = true
         this.$store.commit('toggleShowCompleted')
         this.$nextTick(() => {
           this.$redrawVueMasonry()
+          setTimeout(() => {
+            this.disableButtons = false
+          }, 1000)
         })
       }
     },

@@ -1,8 +1,10 @@
 <template>
-  <div id="main">
+  <div class="group-container">
+
     <h1>{{ group.groupName }}</h1>
+
     <div
-      class="kontenjer"
+      class="category-grid"
       v-masonry
       itemSelector=".category-box"
       fit-width="true"
@@ -161,9 +163,6 @@
 </script>
 
 <style scoped>
-  h1 {
-    margin: 5px auto;
-  }
 
   #main {
     margin: 30px auto;
@@ -171,29 +170,8 @@
     text-align: center;
   }
 
-  .kontenjer {
-    text-align: center;
-    margin: 0 auto;
-  }
-
   input {
     display: block;
     margin: 10px auto;
-  }
-
-  button {
-    margin: 10px 10px;
-    font-family: 'Kingthings Petrock', 'Felipa', Arial, sans-serif;
-    color: #4e2c10;
-    padding: 0;
-    outline: none;
-    height: 19px;
-    width: 95px;
-    border: none;
-    background: url(../assets/button.png);
-  }
-
-  button:hover {
-    background: url(../assets/button_hover.png);
   }
 </style>

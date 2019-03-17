@@ -1,12 +1,55 @@
-@font-face{
+@font-face {
     font-family: "Kingthings Petrock";
     src: url("../../public/css/fonts/Kingthings Petrock.ttf");
 }
-@font-face{
+
+@font-face {
     font-family: "Kingthings Petrock Light";
     src: url("../../public/css/fonts/Kingthings Petrock light.ttf");
 }
-@font-face{
+
+@font-face {
     font-family: "Ornaments";
     src: url("../../public/css/fonts/Cornucopia of Ornaments Two.ttf");
+}
+
+button {
+    margin: 10px 10px;
+    font-family: 'Kingthings Petrock', 'Felipa', Arial, sans-serif;
+    color: #4e2c10;
+    padding: 0;
+    outline: none;
+    height: 19px;
+    width: 95px;
+    border: none;
+    background: url(~/src/assets/button.png);
+}
+
+button:hover {
+    background: url(~/src/assets/button_hover.png);
+}
+
+button:disabled {
+    color: grey;
+}
+
+.group-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.category-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+body {
+    background: #FAEBD7 url(//en.uesp.net/w/extensions/UespCustomCode/files/Parchment_bg.jpg) 0 0 repeat;
+    font-family: 'Kingthings Petrock', 'Felipa', Arial, sans-serif;
+}
+
+h1 {
+    color: #2c3e50;
 }
