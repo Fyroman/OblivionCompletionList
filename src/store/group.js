@@ -1,19 +1,62 @@
-import Vue from 'vue'
 import firebase from 'firebase/app'
 import 'firebase/database'
+import {cloneDeep} from 'lodash'
 
 const state = () => ({
+  showCompleted: true,
+  loadedGroups: [],
   groups: []
 })
 
+const getters = {
+  getData(state) {
+    if (state.showCompleted) {
+      return state.groups
+    } else {
+      for (let g = 0; g < state.groups.length; g++) {
+        for (let c = state.groups[g].categories.length - 1; c >= 0; c--) {
+          for (let q = state.groups[g].categories[c].quests.length - 1; q >= 0; q--) {
+            if (state.groups[g].categories[c].quests[q].questCompleted) {
+              state.groups[g].categories[c].quests.splice(q, 1)
+            }
+          }
+          if (!state.groups[g].categories[c].quests.length) {
+            state.groups[g].categories.splice(c, 1)
+          }
+        }
+      }
+    }
+  }
+}
+
 const mutations = {
+  toggleShowCompleted(state) {
+    state.showCompleted = !state.showCompleted
+    if (state.showCompleted) {
+      state.groups = cloneDeep(state.loadedGroups)
+    } else {
+      for (let g = 0; g < state.groups.length; g++) {
+        for (let c = state.groups[g].categories.length - 1; c >= 0; c--) {
+          for (let q = state.groups[g].categories[c].quests.length - 1; q >= 0; q--) {
+            if (state.groups[g].categories[c].quests[q].questCompleted) {
+              state.groups[g].categories[c].quests.splice(q, 1)
+            }
+          }
+          if (!state.groups[g].categories[c].quests.length) {
+            state.groups[g].categories.splice(c, 1)
+          }
+        }
+      }
+    }
+  },
   setGroups(state, groups) {
+    state.loadedGroups = cloneDeep(groups)
     state.groups = groups
   }
 }
 
 const actions = {
-  async getGroups({commit}) {
+  async loadData({commit}) {
     let groupsArray = []
     await firebase.database().ref('group').once('value').then(groups => {
       groups.forEach(group => {
@@ -36,12 +79,14 @@ const actions = {
             })
             groupsArray[index].categories[cIndex].quests = []
             category.forEach(quests => {
-              groupsArray[index].categories[cIndex].quests.push({
-                key: quests.key,
-                questCompleted: quests.val().questCompleted,
-                questDescription: quests.val().questDescription,
-                questTitle: quests.val().questTitle,
-              })
+              if (quests.val().questTitle) {
+                groupsArray[index].categories[cIndex].quests.push({
+                  key: quests.key,
+                  questCompleted: quests.val().questCompleted,
+                  questDescription: quests.val().questDescription,
+                  questTitle: quests.val().questTitle,
+                })
+              }
             })
           })
         })
@@ -146,6 +191,7 @@ const actions = {
 
 export default {
   state,
+  getters,
   mutations,
   actions,
 }

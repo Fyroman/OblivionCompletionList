@@ -4,8 +4,8 @@
     <div class="kontenjer"
          v-masonry itemSelector=".category-box"
          fit-width="true">
-      <Category v-for="category in categories"
-                :key="`${group.id}${category.id}`"
+      <Category v-for="category in computedCategories"
+                :key="`${group.key}${category.key}`"
                 :category="category"
                 :editMode="editMode"
                 :showCompleted="showCompleted"
@@ -52,11 +52,15 @@
     },
     data() {
       return {
-        categories: [],
         categoryName: '',
         showForm: false,
         buttonHovering: false
       }
+    },
+    computed: {
+      computedCategories() {
+        return this.group.categories
+      },
     },
     methods: {
       addNewCategory: function () {
@@ -148,29 +152,6 @@
           }
         );
       }
-    },
-    created() {
-      var group = this.group.groupName;
-      this.$http.get(
-        'https://oblivioncompletionlist.firebaseio.com/categories/'
-        + group
-        + '/.json'
-      ).then(
-        function (data) {
-          return data.json();
-        }
-      ).then(
-        function (data) {
-          var someArray = [];
-          for (let key in data) {
-            data[key].id = key;
-            someArray.push(data[key]);
-          }
-          ;
-          this.categories = someArray;
-          console.log("Kategorije grupe \'" + group + "\' učitane.");
-        }
-      )
     },
     updated() {
       if (typeof this.$redrawVueMasonry === 'function') {

@@ -5,12 +5,11 @@
       <h2 id="category-title">{{ category.categoryName }}</h2>
       <h2 class="title-ornaments"> B</h2>
     </div>
-    <Quest v-for="quest in quests"
-           :key="`${group.id}${category.id}${quest.id}`"
+    <Quest v-for="quest in computedQuests"
+           :key="`${group.key}${category.key}${quest.key}`"
            :quest="quest"
            :category="category"
            :editMode="editMode"
-           v-show="showCompleted&&quest.questCompleted||!quest.questCompleted"
            :group="group"
            @deleteQuest="deleteQuest($event)"/>
     <div v-show="editMode" id="edit-buttons">
@@ -65,11 +64,19 @@
     },
     data() {
       return {
-        quests: [],
         questTitle: '',
         questDescription: '',
         showForm: false,
         buttonHovering: false
+      }
+    },
+    computed: {
+      computedQuests() {
+        if (this.$store.state.group.showCompleted) {
+          return this.category.quests
+        } else {
+          return this.category.quests.filter(q => !q.questCompleted)
+        }
       }
     },
     methods: {
@@ -154,31 +161,6 @@
           }
         );
       }
-    },
-    created() {
-      var category = this.category.categoryName;
-      this.$http.get(
-        'https://oblivioncompletionlist.firebaseio.com/quests/'
-        + this.group.groupName
-        + '/'
-        + category
-        + '/.json'
-      ).then(
-        function (data) {
-          return data.json();
-        }
-      ).then(
-        function (data) {
-          var someArray = [];
-          for (let key in data) {
-            data[key].id = key;
-            someArray.push(data[key]);
-          }
-          ;
-          this.quests = someArray;
-          console.log("Zadatci grupe \'" + category + "\' učitani.");
-        }
-      )
     },
     updated() {
       if (typeof this.$redrawVueMasonry === 'function') {

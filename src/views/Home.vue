@@ -14,11 +14,11 @@
             @mouseout="buttonHovering=false">Toggle Completed
     </button>
 
-    <Group v-for="group in groups"
-           :key="`${group.id}`"
+    <Group v-for="group in computedGroups"
+           :key="`${group.key}`"
            :group="group"
            :editMode="editMode"
-           :showCompleted="showCompleted"
+           :showCompleted="$store.state.group.showCompleted"
            @deleteGroup="deleteGroup($event)"/>
 
     <button v-show="!showForm&&editMode"
@@ -50,13 +50,16 @@
     },
     data() {
       return {
-        groups: [],
         groupName: '',
         showForm: false,
         editMode: false,
         buttonHovering: false,
-        showCompleted: true
       }
+    },
+    computed: {
+      computedGroups() {
+        return this.$store.state.group.groups
+      },
     },
     methods: {
       addNewGroup: function () {
@@ -121,30 +124,15 @@
         this.$redrawVueMasonry();
       },
       toggleCompleted: function () {
-        this.showCompleted = !this.showCompleted;
+        this.$store.commit('toggleShowCompleted')
+        // this.showCompleted = !this.showCompleted;
         this.$redrawVueMasonry();
       }
     },
-    created() {
-      this.$store.dispatch('getGroups')
-      this.$http.get(
-        'https://oblivioncompletionlist.firebaseio.com/groups.json'
-      ).then(
-        function (data) {
-          return data.json();
-        }
-      ).then(
-        function (data) {
-          var someArray = [];
-          for (let key in data) {
-            data[key].id = key;
-            someArray.push(data[key]);
-          }
-          ;
-          this.groups = someArray;
-          console.log("Grupe učitane.");
-        }
-      )
+    async created() {
+      console.log('učitavanje grupa')
+      await this.$store.dispatch('loadData')
+      console.log('učitavanje gotovo')
     },
     updated() {
       if (typeof this.$redrawVueMasonry === 'function') {
