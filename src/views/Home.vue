@@ -123,10 +123,14 @@
         );
       },
       toggleEditing: function () {
-        this.resetForm();
-        this.editMode = !this.editMode;
+        this.resetForm()
+        this.disableButtons = true
+        this.editMode = !this.editMode
         this.$nextTick(() => {
-          this.$redrawVueMasonry();
+          this.$redrawVueMasonry()
+          setTimeout(() => {
+            this.disableButtons = false
+          }, 1000)
         })
       },
       toggleCompleted: function () {
