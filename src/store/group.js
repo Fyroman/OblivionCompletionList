@@ -20,7 +20,6 @@ const actions = {
       }
     ).then(
       function (data) {
-        console.log(data)
         let groups = []
         for (let key in data) {
           data[key].id = key
