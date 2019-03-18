@@ -52,17 +52,81 @@ const mutations = {
   setGroups(state, groups) {
     state.loadedGroups = cloneDeep(groups)
     state.groups = groups
-  }
+  },
+  toggleQuestCompletion(state, params) {
+
+    // Find group
+    let group = state.groups.find(g => {
+      return g.key === params.group
+    })
+
+    // Find category
+    let category = group.categories.find(c => {
+      return c.key === params.category
+    })
+
+    // Find quest
+    let quest = category.quests.find(q => {
+      return q.key === params.quest
+    })
+
+    // Change quest completion
+    quest.questCompleted = !quest.questCompleted
+  },
+  addQuest(state, params) {
+
+    // Find group
+    let group = state.groups.find(g => {
+      return g.key === params.group
+    })
+
+    // Find category
+    let category = group.categories.find(c => {
+      return c.key === params.category
+    })
+
+    // Add quest
+    category.quests.push(params.quest)
+  },
+  deleteQuest(state, params) {
+
+    // Find group
+    let group = state.groups.find(g => {
+      return g.key === params.group
+    })
+
+    // Find category
+    let category = group.categories.find(c => {
+      return c.key === params.category
+    })
+
+    // Find quest index
+    let questIndex = category.quests.findIndex(q => {
+      return q.key === params.quest
+    })
+
+    // Remove quest
+    category.quests.splice(questIndex, 1)
+  },
 }
 
 const actions = {
+  toggleQuestCompletion({commit}, params) {
+    commit('toggleQuestCompletion', params)
+  },
+  addQuest({commit}, params) {
+    commit('addQuest', params)
+  },
+  deleteQuest({commit}, params) {
+    commit('deleteQuest', params)
+  },
   async loadData({commit}) {
     let groupsArray = []
     await firebase.database().ref('group').once('value').then(groups => {
       groups.forEach(group => {
         groupsArray.push({
           key: group.key,
-          groupName: group.val().groupName,
+          groupName: group.val().groupName
         })
         let index = groupsArray.findIndex(g => {
           return g.groupName === group.val().groupName
@@ -72,21 +136,19 @@ const actions = {
           categories.forEach(category => {
             groupsArray[index].categories.push({
               key: category.key,
-              categoryName: category.val().categoryName,
+              categoryName: category.val().categoryName
             })
             let cIndex = groupsArray[index].categories.findIndex(c => {
               return c.categoryName === category.val().categoryName
             })
             groupsArray[index].categories[cIndex].quests = []
             category.forEach(quests => {
-              if (quests.val().questTitle) {
+              quests.forEach(quest => {
                 groupsArray[index].categories[cIndex].quests.push({
-                  key: quests.key,
-                  questCompleted: quests.val().questCompleted,
-                  questDescription: quests.val().questDescription,
-                  questTitle: quests.val().questTitle,
+                  key: quest.key,
+                  ...quest.val()
                 })
-              }
+              })
             })
           })
         })
@@ -106,8 +168,9 @@ const actions = {
         let index = (groups.findIndex(g => {
           return g.groupName === childSnap.key
         }))
-        if (!groups[index].categories)
+        if (!groups[index].categories) {
           groups[index].categories = []
+        }
         childSnap.forEach(s => {
           groups[index].categories.push(s.val())
         })
@@ -171,10 +234,11 @@ const actions = {
                           .child(eh.key)
                           .child('category')
                           .child(bleh.key)
+                          .child('quest')
                           .push({
                             questCompleted: groups[g].categories[c].quests[q].questCompleted,
                             questDescription: groups[g].categories[c].quests[q].questDescription,
-                            questTitle: groups[g].categories[c].quests[q].questTitle,
+                            questTitle: groups[g].categories[c].quests[q].questTitle
                           })
                       }
                     })
@@ -193,5 +257,5 @@ export default {
   state,
   getters,
   mutations,
-  actions,
+  actions
 }

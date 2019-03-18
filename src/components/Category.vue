@@ -55,6 +55,8 @@
 </template>
 
 <script>
+  import firebase from 'firebase/app'
+  import 'firebase/database'
   import Quest from '@/components/Quest.vue'
 
   export default {
@@ -80,43 +82,31 @@
       }
     },
     methods: {
-      addNewQuest: function () {
-        var obj = {
-          questTitle: this.questTitle,
-          questDescription: this.questDescription,
-          questCompleted: false
-        };
-        if (obj.questTitle == '') {
-          console.log("Nećeš razbojniće!");
-        } else {
-          var category = this.category.categoryName;
-          this.$http.post(
-            'https://oblivioncompletionlist.firebaseio.com/quests/'
-            + this.group.groupName
-            + '/'
-            + category
-            + '/.json',
-            obj
-          ).then(
-            response => {
-              var message = "Postanje uspješno, server javlja: "
-                + response.statusText;
-              console.log(message);
-              this.quests.push({
-                questTitle: obj.questTitle,
-                questDescription: obj.questDescription,
-                id: response.body.name
-              });
-              console.log(this.quests);
-            }, response => {
-              var message = "Postanje neuspješno, server javlja: "
-                + response.statusText;
-              console.log(message);
-            }
-          );
-          this.resetForm();
+      async addNewQuest() {
+        let {questTitle, questDescription} = this
+        let quest = {
+          questTitle,
+          questDescription,
+          questCompleted: false,
         }
-        ;
+        console.log(quest)
+        let ref = `group/${this.group.key}/category/${this.category.key}/quest`
+        try {
+          let data = await firebase.database().ref(ref).push(quest)
+          quest.key = data.key
+          this.$store.dispatch('addQuest', {
+            group: this.group.key,
+            category: this.category.key,
+            quest,
+          })
+          this.$store.dispatch('setToast', {text: 'Quest added'})
+          this.$nextTick(() => {
+            this.$redrawVueMasonry()
+          })
+        } catch (err) {
+          console.log(err)
+        }
+        this.resetForm();
       },
       resetForm: function () {
         this.showForm = false;
@@ -131,37 +121,9 @@
             categoryName: this.category.categoryName
           }
         );
-      },
-      deleteQuest: function (questId) {
-        var category = this.category.categoryName;
-        this.$http.delete(
-          'https://oblivioncompletionlist.firebaseio.com/quests/'
-          + this.group.groupName
-          + '/'
-          + category
-          + '/'
-          + questId
-          + '.json'
-        ).then(
-          response => {
-            var message = "Brisanje uspješno, server javlja: "
-              + response.statusText;
-            console.log(message);
-            for (var i = 0; i < this.quests.length; i++) {
-              if (this.quests[i].id == questId) {
-                this.quests.splice(i, 1);
-              }
-            }
-            ;
-          },
-          response => {
-            var message = "Brisanje neuspješno, server javlja: "
-              + response.statusText;
-            console.log(message);
-          }
-        );
       }
-    },
+    }
+    ,
   }
 </script>
 

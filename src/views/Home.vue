@@ -146,6 +146,8 @@
     },
     async created() {
       await this.$store.dispatch('loadData')
+      // await this.$store.dispatch('loadData')
+      this.$store.dispatch('setToast', {text: 'Data Loaded'})
     },
   }
 </script>
