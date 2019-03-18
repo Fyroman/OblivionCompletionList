@@ -63,6 +63,9 @@
             quest: this.quest.key
           })
           this.$store.dispatch('setToast', {text: 'Quest completion updated'})
+          this.$nextTick(() => {
+            this.$redrawVueMasonry()
+          })
         } catch (err) {
           console.log(err)
         }
