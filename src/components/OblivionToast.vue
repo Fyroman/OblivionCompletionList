@@ -53,6 +53,8 @@
   }
 
   .toast-item {
+    user-select: none;
+    cursor: pointer;
     background-color: wheat;
     padding: 8px 12px;
     margin-bottom: 8px;

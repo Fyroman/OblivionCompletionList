@@ -22,11 +22,11 @@ button {
     height: 19px;
     width: 95px;
     border: none;
-    background: url(~/src/assets/button.png);
+    background: url(../../src/assets/button.png);
 }
 
 button:hover {
-    background: url(~/src/assets/button_hover.png);
+    background: url(../../src/assets/button_hover.png);
 }
 
 button:disabled {

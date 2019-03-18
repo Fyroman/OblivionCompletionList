@@ -163,22 +163,6 @@
     margin: 10px auto;
   }
 
-  button {
-    margin: 10px 10px;
-    font-family: 'Kingthings Petrock', 'Felipa', Arial, sans-serif;
-    color: #4e2c10;
-    outline: none;
-    padding: 0;
-    height: 19px;
-    width: 95px;
-    border: none;
-    background: url(../assets/button.png);
-  }
-
-  button:hover {
-    background: url(../assets/button_hover.png);
-  }
-
   .menu {
     display: flex;
     flex-direction: column;
