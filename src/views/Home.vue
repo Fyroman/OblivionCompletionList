@@ -153,22 +153,10 @@
 </script>
 
 <style scoped>
-  #home {
-    display: block;
-    background: #FAEBD7 url(//en.uesp.net/w/extensions/UespCustomCode/files/Parchment_bg.jpg) 0 0 repeat;
-  }
 
   input {
     display: block;
     margin: 10px auto;
-  }
-
-  .menu {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 10px;
-    right: 10px;
   }
 
 </style>

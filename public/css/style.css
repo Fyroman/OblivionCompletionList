@@ -45,8 +45,17 @@ button:disabled {
     margin: 0 auto;
 }
 
+.menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
+
 body {
-    background: #FAEBD7 url(//en.uesp.net/w/extensions/UespCustomCode/files/Parchment_bg.jpg) 0 0 repeat;
+    background-image: url(//en.uesp.net/w/extensions/UespCustomCode/files/Parchment_bg.jpg);
+    background-size: 200px 125px;
     font-family: 'Kingthings Petrock', 'Felipa', Arial, sans-serif;
 }
 
